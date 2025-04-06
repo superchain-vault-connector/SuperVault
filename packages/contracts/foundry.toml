@@ -1,0 +1,24 @@
+[rpc_endpoints]
+op_chain_a = "http://127.0.0.1:9545"
+op_chain_b = "http://127.0.0.1:9546"
+
+[profile.default]
+src = "src"
+out = "out"
+libs = ["dependencies"]
+
+fs_permissions = [
+  { access='read', path='./configs' },
+  { access='read', path='./test' },
+  { access='read-write', path='./deployment.json' },
+  { access='read-write', path='./deployment-erc20.json' },
+  { access='read-write', path='./deployment-erc4626.json' },
+]
+
+[dependencies]
+forge-std = "1.9.6"
+"@openzeppelin-contracts" = "5.2.0"
+solady = "0.1.14"
+"@interop-lib" = { version = "v1", git = "git@github.com:ethereum-optimism/interop-lib.git", rev = "aa8bb485f6407609c7e06104de498bdbf61f3163" }
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

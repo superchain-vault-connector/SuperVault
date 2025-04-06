@@ -1,0 +1,3 @@
+[submodule "packages/contracts/dependencies/@interop-lib-v1"]
+	path = packages/contracts/dependencies/@interop-lib-v1
+	url = https://github.com/ethereum-optimism/interop-lib
