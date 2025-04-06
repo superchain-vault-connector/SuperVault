@@ -19,6 +19,6 @@ fs_permissions = [
 forge-std = "1.9.6"
 "@openzeppelin-contracts" = "5.2.0"
 solady = "0.1.14"
-"@interop-lib" = { version = "v1", git = "git@github.com:ethereum-optimism/interop-lib.git", rev = "aa8bb485f6407609c7e06104de498bdbf61f3163" }
+"@interop-lib" = { version = "v1", git = "https://github.com/ethereum-optimism/interop-lib.git", rev = "aa8bb485f6407609c7e06104de498bdbf61f3163" }
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
