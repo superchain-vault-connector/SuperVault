@@ -1,7 +1,7 @@
 [[dependencies]]
 name = "@interop-lib"
 version = "v1"
-git = "git@github.com:ethereum-optimism/interop-lib.git"
+git = "https://github.com/ethereum-optimism/interop-lib.git"
 rev = "aa8bb485f6407609c7e06104de498bdbf61f3163"
 
 [[dependencies]]
