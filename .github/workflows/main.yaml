@@ -82,6 +82,6 @@ jobs:
       - name: Run Tests
         shell: bash
         run: |
-          pnpm supersim &
-          pnpm contracts:deploy:dev
+          pnpm supersim
+  #         pnpm contracts:deploy:dev
   #         pnpm e2e-test:ci
