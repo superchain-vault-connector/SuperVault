@@ -21,46 +21,46 @@ permissions:
   actions: 'read'
 
 jobs:
-  # typecheck:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
-  #     - name: Setup
-  #       uses: ./.github/actions/setup
-  #     - name: Run TypeChecker
-  #       run: |
-  #         pnpm -r typecheck
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Run TypeChecker
+        run: |
+          pnpm -r typecheck
 
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
-  #     - name: Setup
-  #       uses: ./.github/actions/setup
-  #     - name: Run Linters
-  #       run: |
-  #         pnpm -r lint
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Run Linters
+        run: |
+          pnpm -r lint
 
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
-  #     - name: Setup
-  #       uses: ./.github/actions/setup
-  #     - name: Run Tests
-  #       run: |
-  #         pnpm -r --filter '!e2e-test' test
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Run Tests
+        run: |
+          pnpm -r --filter '!e2e-test' test
 
-  deploy-test:
+  e2e-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -83,5 +83,5 @@ jobs:
         shell: bash
         run: |
           pnpm supersim
-  #         pnpm contracts:deploy:dev
-  #         pnpm e2e-test:ci
+          pnpm contracts:deploy:dev
+          pnpm e2e-test:ci

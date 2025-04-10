@@ -20,8 +20,8 @@ workflows:
     jobs:
       - lint
       - typecheck
-      # - test-e2e
-      # - test-unit
+      - test-e2e
+      - test-unit
 
 commands:
   install-dependencies:
@@ -51,29 +51,29 @@ jobs:
           name: Run TypeChecker
           command: pnpm -r typecheck
   
-  # test-e2e:
-  #   executor: default
-  #   environment:
-  #     DEPLOYER_PRIVATE_KEY: << pipeline.parameters.test-e2e-deployer-private-key >>
-  #   steps:
-  #     - checkout
-  #     - install-dependencies
-  #     - run:
-  #         name: Prepare env
-  #         command: echo "DEPLOYER_PRIVATE_KEY=$DEPLOYER_PRIVATE_KEY" >> packages/contracts/.env
-  #     - run: 
-  #         name: Run Tests
-  #         command: |
-  #           pnpm supersim &
-  #           pnpm contracts:deploy:dev
-  #           pnpm e2e-test:ci
+  test-e2e:
+    executor: default
+    environment:
+      DEPLOYER_PRIVATE_KEY: << pipeline.parameters.test-e2e-deployer-private-key >>
+    steps:
+      - checkout
+      - install-dependencies
+      - run:
+          name: Prepare env
+          command: echo "DEPLOYER_PRIVATE_KEY=$DEPLOYER_PRIVATE_KEY" >> packages/contracts/.env
+      - run: 
+          name: Run Tests
+          command: |
+            pnpm supersim &
+            pnpm contracts:deploy:dev
+            pnpm e2e-test:ci
 
-  # test-unit:
-  #   executor: default
-  #   steps:
-  #     - checkout
-  #     - install-dependencies
-  #     - run:
-  #         name: Run Tests
-  #         command: pnpm -r --filter '!e2e-test' test
+  test-unit:
+    executor: default
+    steps:
+      - checkout
+      - install-dependencies
+      - run:
+          name: Run Tests
+          command: pnpm -r --filter '!e2e-test' test
   
