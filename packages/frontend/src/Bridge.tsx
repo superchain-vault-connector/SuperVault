@@ -112,9 +112,9 @@ export const Bridge = () => {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               onWheel={(e) => {
-                const target = e.target as HTMLInputElement; // Cast to HTMLInputElement
-                target.blur(); // Temporarily remove focus
-                setTimeout(() => target.focus(), 0); // Restore focus after the event
+                const target = e.target as HTMLInputElement // Cast to HTMLInputElement
+                target.blur() // Temporarily remove focus
+                setTimeout(() => target.focus(), 0) // Restore focus after the event
               }}
             />
           </div>

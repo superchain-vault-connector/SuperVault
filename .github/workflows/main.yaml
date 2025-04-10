@@ -71,10 +71,10 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-#         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-#         chmod 600 ~/.ssh/id_rsa
-#       env:
-#         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      #         chmod 600 ~/.ssh/id_rsa
+      #       env:
+      #         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Setup
         uses: ./.github/actions/setup
       - name: Write DEPLOYER_PRIVATE_KEY to .env

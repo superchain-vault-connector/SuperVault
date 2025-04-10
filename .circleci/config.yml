@@ -13,7 +13,7 @@ parameters:
     type: string
     description: Deployer private key for the E2E tests
     # The first account created from "test test ... test junk" mnemonic
-    default: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+    default: '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
 
 workflows:
   main:
@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Run TypeChecker
           command: pnpm -r lint
-  
+
   typecheck:
     executor: default
     steps:
@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Run TypeChecker
           command: pnpm -r typecheck
-  
+
   test-e2e:
     executor: default
     environment:
@@ -61,7 +61,7 @@ jobs:
       - run:
           name: Prepare env
           command: echo "DEPLOYER_PRIVATE_KEY=$DEPLOYER_PRIVATE_KEY" >> packages/contracts/.env
-      - run: 
+      - run:
           name: Run Tests
           command: |
             pnpm supersim &
@@ -76,4 +76,3 @@ jobs:
       - run:
           name: Run Tests
           command: pnpm -r --filter '!e2e-test' test
-  
