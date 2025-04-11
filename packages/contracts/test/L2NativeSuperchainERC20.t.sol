@@ -80,7 +80,9 @@ contract L2NativeSuperchainERC20Test is Test {
     }
 
     /// @notice Tests that ownership of the token can be transferred.
-    function testFuzz_testTransferOwnership(address _newOwner) public {
+    function testFuzz_testTransferOwnership(
+        address _newOwner
+    ) public {
         vm.assume(_newOwner != owner);
         vm.assume(_newOwner != ZERO_ADDRESS);
 
@@ -134,9 +136,11 @@ contract L2NativeSuperchainERC20Test is Test {
     }
 
     /// @notice tests that an insufficient balance cannot be transferred.
-    function testFuzz_transferInsufficientBalance_reverts(address _to, uint256 _mintAmount, uint256 _sendAmount)
-        public
-    {
+    function testFuzz_transferInsufficientBalance_reverts(
+        address _to,
+        uint256 _mintAmount,
+        uint256 _sendAmount
+    ) public {
         vm.assume(_mintAmount < type(uint256).max);
         _sendAmount = bound(_sendAmount, _mintAmount + 1, type(uint256).max);
 
