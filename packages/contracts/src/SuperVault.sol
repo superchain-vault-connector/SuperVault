@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 // Contracts
 import {ERC20} from "@solady/tokens/ERC20.sol";
 import {ERC4626} from "@solady/tokens/ERC4626.sol";
-import "./L2NativeSuperchainERC20.sol";
+import "./SuperchainERC20.sol";
 
 // Libraries
 import {PredeployAddresses} from "@interop-lib/libraries/PredeployAddresses.sol";
@@ -17,15 +17,26 @@ import {IERC7802, IERC165} from "@interop-lib/interfaces/IERC7802.sol";
 import {FixedPointMathLib} from "@solady/utils/FixedPointMathLib.sol";
 import {SafeTransferLib} from "@solady/utils/SafeTransferLib.sol";
 
-abstract contract TokenVault is IERC7802, ERC4626, L2NativeSuperchainERC20 {
+abstract contract SuperVault is IERC7802, ERC4626, SuperchainERC20 {
     using FixedPointMathLib for uint256;
 
-    constructor(
-        address owner_,
-        string memory name_,
-        string memory symbol_,
-        uint8 decimals_
-    ) ERC4626() L2NativeSuperchainERC20(owner_, name_, symbol_, decimals_) {}
+    string private _name;
+    string private _symbol;
+    uint8 private immutable _decimals;
+
+    constructor(string memory name_, string memory symbol_, uint8 decimals_) ERC4626() {
+        _name = name_;
+        _symbol = symbol_;
+        _decimals = decimals_;
+    }
+
+    function name() public view virtual override returns (string memory) {
+        return _name;
+    }
+
+    function symbol() public view virtual override returns (string memory) {
+        return _symbol;
+    }
 
     // Override conflicting functions
     function _approve(address owner, address spender, uint256 amount) internal override (ERC20) {
@@ -62,16 +73,8 @@ abstract contract TokenVault is IERC7802, ERC4626, L2NativeSuperchainERC20 {
         return super.balanceOf(account);
     }
 
-    function decimals() public view virtual override (ERC4626, L2NativeSuperchainERC20) returns (uint8) {
+    function decimals() public view virtual override (ERC4626, ERC20) returns (uint8) {
         return super.decimals();
-    }
-
-    function name() public view override (ERC20, L2NativeSuperchainERC20) returns (string memory) {
-        return super.name();
-    }
-
-    function symbol() public view override (ERC20, L2NativeSuperchainERC20) returns (string memory) {
-        return super.symbol();
     }
 
     function totalSupply() public view override (ERC20) returns (uint256) {
