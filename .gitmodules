@@ -1,3 +1,6 @@
 [submodule "packages/contracts/dependencies/@interop-lib-v1"]
 	path = packages/contracts/dependencies/@interop-lib-v1
 	url = https://github.com/ethereum-optimism/interop-lib
+[submodule "packages/kernel/dependencies/ExcessivelySafeCall-1.0.0"]
+	path = packages/kernel/dependencies/ExcessivelySafeCall-1.0.0
+	url = https://github.com/nomad-xyz/ExcessivelySafeCall.git
