@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {IHook} from "src/interfaces/IERC7579Modules.sol";
+import {IHook} from "../../src/interfaces/IERC7579Modules.sol";
 
 contract MockHook is IHook {
     mapping(address => bytes) public data;
@@ -24,7 +24,7 @@ contract MockHook is IHook {
         return data[smartAccount].length > 0;
     }
 
-    function preCheck(address msgSender, uint256 value, bytes calldata msgData)
+    function preCheck(address msgSender, uint256 /*value*/, bytes calldata msgData)
         external
         payable
         override

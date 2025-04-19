@@ -31,7 +31,8 @@ abstract contract ExecutorManager {
     function _installExecutor(IExecutor executor, bytes calldata executorData, IHook hook) internal {
         _installExecutorWithoutInit(executor, hook);
         if (executorData.length == 0) {
-            (bool success,) = address(executor).call(abi.encodeWithSelector(IModule.onInstall.selector, executorData)); // ignore return value
+            (bool success,) = address(executor).call(abi.encodeWithSelector(IModule.onInstall.selector, executorData));
+            require(success, "Low-level call to onInstall failed");
         } else {
             executor.onInstall(executorData);
         }

@@ -38,7 +38,7 @@ contract ECDSAValidatorTest is KernelTestBase {
         return sig;
     }
 
-    function _rootSignUserOp(PackedUserOperation memory op, bytes32 userOpHash, bool success)
+    function _rootSignUserOp(PackedUserOperation memory /* op */, bytes32 userOpHash, bool success)
         internal
         view
         override
@@ -73,7 +73,7 @@ contract ECDSAValidatorTest is KernelTestBase {
         entrypoint.handleOps(ops, payable(address(0xdeadbeef)));
     }
 
-    function _prepareMaliciousEnableUserOp(bytes memory callData) internal returns (PackedUserOperation memory op) {
+    function _prepareMaliciousEnableUserOp(bytes memory callData) internal view returns (PackedUserOperation memory op) {
         uint192 encodedAsNonceKey = ValidatorLib.encodeAsNonceKey(
             ValidationMode.unwrap(VALIDATION_MODE_ENABLE),
             ValidationType.unwrap(VALIDATION_TYPE_VALIDATOR),

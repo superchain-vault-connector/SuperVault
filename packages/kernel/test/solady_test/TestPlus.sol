@@ -42,8 +42,7 @@ contract TestPlus is Brutalizer {
         hex"7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe03601600081602082378035828234f58015156039578182fd5b8082525050506014600cf3";
 
     /// @dev Canonical address of 0age's immutable create 2 factory.
-    address internal constant _IMMUTABLE_CREATE2_FACTORY =
-        0x0000000000FFe8B47B3e2130213B802212439497;
+    address internal constant _IMMUTABLE_CREATE2_FACTORY = 0x0000000000FFe8B47B3e2130213B802212439497;
 
     /// @dev The bytecode of 0age's immutable create 2 factory.
     bytes internal constant _IMMUTABLE_CREATE2_FACTORY_BYTECODE =
@@ -57,8 +56,7 @@ contract TestPlus is Brutalizer {
         0xd715531fe383f818c5f158c342925dcf01b954d24678ada4d07c36af0f20e1ee;
 
     /// @dev The maximum private key.
-    uint256 private constant _PRIVATE_KEY_MAX =
-        0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364140;
+    uint256 private constant _PRIVATE_KEY_MAX = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364140;
 
     /// @dev Some constant to brutalize the upper bits of addresses.
     uint256 private constant _ADDRESS_BRUTALIZER = 0xc0618c2bfd481dcf3e31738f;
@@ -68,14 +66,10 @@ contract TestPlus is Brutalizer {
     uint256 private constant _LPRNG_MULTIPLIER = 0x100000000000000000000000000000051;
 
     /// @dev Modulo for a mulmod Lehmer psuedorandom number generator. (prime)
-    uint256 private constant _LPRNG_MODULO =
-        0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff43;
+    uint256 private constant _LPRNG_MODULO = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff43;
 
     /// @dev Returns whether the `value` has been generated for `typeId` and `groupId` before.
-    function __markAsGenerated(bytes32 typeId, bytes32 groupId, uint256 value)
-        private
-        returns (bool isSet)
-    {
+    function __markAsGenerated(bytes32 typeId, bytes32 groupId, uint256 value) private returns (bool isSet) {
         /// @solidity memory-safe-assembly
         assembly {
             let m := mload(0x40) // Cache the free memory pointer.
@@ -291,19 +285,13 @@ contract TestPlus is Brutalizer {
 
     /// @dev Returns a pseudorandom signer and its private key.
     /// The signer may have dirty upper 96 bits.
-    function _randomUniqueSigner(uint256 groupId)
-        internal
-        returns (address signer, uint256 privateKey)
-    {
+    function _randomUniqueSigner(uint256 groupId) internal returns (address signer, uint256 privateKey) {
         (signer, privateKey) = _randomUniqueSigner(bytes32(groupId));
     }
 
     /// @dev Returns a pseudorandom signer and its private key.
     /// The signer may have dirty upper 96 bits.
-    function _randomUniqueSigner(bytes32 groupId)
-        internal
-        returns (address signer, uint256 privateKey)
-    {
+    function _randomUniqueSigner(bytes32 groupId) internal returns (address signer, uint256 privateKey) {
         privateKey = _randomUniquePrivateKey(groupId);
         signer = __toBrutalizedAddress(__getSigner(privateKey));
     }
@@ -568,11 +556,7 @@ contract TestPlus is Brutalizer {
 
     /// @dev Truncate the bytes to `n` bytes.
     /// Returns the result for function chaining.
-    function _truncateBytes(bytes memory b, uint256 n)
-        internal
-        pure
-        returns (bytes memory result)
-    {
+    function _truncateBytes(bytes memory b, uint256 n) internal pure returns (bytes memory result) {
         /// @solidity memory-safe-assembly
         assembly {
             if gt(mload(b), n) { mstore(b, n) }
@@ -615,12 +599,7 @@ contract TestPlus is Brutalizer {
     /// @dev Adapted from `bound`:
     /// https://github.com/foundry-rs/forge-std/blob/ff4bf7db008d096ea5a657f2c20516182252a3ed/src/StdUtils.sol#L10
     /// Differentially fuzzed tested against the original implementation.
-    function _hem(uint256 x, uint256 min, uint256 max)
-        internal
-        pure
-        virtual
-        returns (uint256 result)
-    {
+    function _hem(uint256 x, uint256 min, uint256 max) internal pure virtual returns (uint256 result) {
         require(min <= max, "Max is less than min.");
         /// @solidity memory-safe-assembly
         assembly {
@@ -741,10 +720,7 @@ contract TestPlus is Brutalizer {
     }
 
     /// @dev Deploys a contract via 0age's immutable create 2 factory for testing.
-    function _safeCreate2(bytes32 salt, bytes memory initializationCode)
-        internal
-        returns (address deploymentAddress)
-    {
+    function _safeCreate2(bytes32 salt, bytes memory initializationCode) internal returns (address deploymentAddress) {
         deploymentAddress = _safeCreate2(0, salt, initializationCode);
     }
 
