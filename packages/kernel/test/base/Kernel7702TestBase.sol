@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "src/Kernel.sol";
-import "src/factory/KernelFactory.sol";
-import "src/factory/FactoryStaker.sol";
+import "../../src/Kernel.sol";
+import "../../src/factory/KernelFactory.sol";
+import "../../src/factory/FactoryStaker.sol";
 import "../solady_test/TestPlus.sol";
 import "forge-std/Test.sol";
 import "../mock/MockCallee.sol";
@@ -17,10 +17,10 @@ import "../mock/MockFallback.sol";
 import "../mock/MockERC20.sol";
 import "../mock/MockERC721.sol";
 import "../mock/MockERC1155.sol";
-import "src/core/ValidationManager.sol";
+import "../../src/core/ValidationManager.sol";
 import "./erc4337Util.sol";
-import "src/types/Types.sol";
-import "src/types/Structs.sol";
+import "../../src/types/Types.sol";
+import "../../src/types/Structs.sol";
 import "@solady/accounts/LibERC7579.sol";
 
 contract Kernel7702TestBase is TestPlus, Test {
@@ -353,7 +353,7 @@ contract Kernel7702TestBase is TestPlus, Test {
         bytes memory selectorData,
         bytes memory enableSig,
         bytes memory userOpSig,
-        bool isReplayable
+        bool /* isReplayable */
     ) internal pure returns (bytes memory) {
         return abi.encodePacked(
             abi.encodePacked(hook), abi.encode(validatorData, hookData, selectorData, enableSig, userOpSig)
@@ -421,7 +421,7 @@ contract Kernel7702TestBase is TestPlus, Test {
         }
     }
 
-    function _rootSignUserOp(PackedUserOperation memory op, bytes32 userOpHash, bool success)
+    function _rootSignUserOp(PackedUserOperation memory /* op */, bytes32 userOpHash, bool success)
         internal
         virtual
         returns (bytes memory)
@@ -429,7 +429,7 @@ contract Kernel7702TestBase is TestPlus, Test {
         return _rootSignDigest(ECDSA.toEthSignedMessageHash(userOpHash), success);
     }
 
-    function _validatorSignUserOp(PackedUserOperation memory, bytes32 userOpHash, bool success)
+    function _validatorSignUserOp(PackedUserOperation memory, bytes32 /* userOpHash */, bool success)
         internal
         virtual
         returns (bytes memory data)
@@ -442,7 +442,7 @@ contract Kernel7702TestBase is TestPlus, Test {
         }
     }
 
-    function _validatorSignDigest(bytes32 digest, bool success) internal virtual returns (bytes memory data) {
+    function _validatorSignDigest(bytes32 /* digest */, bool success) internal virtual returns (bytes memory data) {
         if (success) {
             data = "enableSig";
             MockValidator(address(enabledValidator)).sudoSetValidSig(data);
@@ -451,7 +451,7 @@ contract Kernel7702TestBase is TestPlus, Test {
         }
     }
 
-    function _permissionSignUserOp(PackedUserOperation memory op, bytes32 userOpHash, bool success)
+    function _permissionSignUserOp(PackedUserOperation memory op, bytes32 /* userOpHash */, bool success)
         internal
         virtual
         returns (bytes memory data)
@@ -476,7 +476,7 @@ contract Kernel7702TestBase is TestPlus, Test {
         data = abi.encodePacked(data, bytes1(0xff), sigs[sigs.length - 1]);
     }
 
-    function _permissionSignDigest(bytes32 digest, bool success) internal virtual returns (bytes memory data) {
+    function _permissionSignDigest(bytes32 /* digest */, bool success) internal virtual returns (bytes memory data) {
         MockPolicy(address(permissionConfig.policies[0])).sudoSetPass(
             address(kernel), bytes32(PermissionId.unwrap(enabledPermission)), true
         );
@@ -489,8 +489,9 @@ contract Kernel7702TestBase is TestPlus, Test {
         return "hello world";
     }
 
-    function _getPolicyAndSignerSig(PackedUserOperation memory op, bool success)
+    function _getPolicyAndSignerSig(PackedUserOperation memory /* op */, bool /* success */)
         internal
+        pure
         returns (bytes[] memory data)
     {
         data = new bytes[](3);
@@ -878,7 +879,7 @@ contract Kernel7702TestBase is TestPlus, Test {
             (uint256 res) = abi.decode(result, (uint256));
             assertEq(res, 100);
         } else {
-            (bool success, bytes memory result) =
+            (bool success, ) =
                 address(kernel).call(abi.encodeWithSelector(MockFallback.fallbackFunction.selector, uint256(10)));
             assertFalse(success);
             PackedUserOperation memory op = _prepareUserOp(
@@ -1125,7 +1126,7 @@ contract Kernel7702TestBase is TestPlus, Test {
     /// @dev Returns the EIP-712 domain separator.
     function buildChainAgnosticDomainSeparator(address addr, string memory name, string memory version)
         private
-        view
+        pure
         returns (bytes32 separator)
     {
         // We will use `separator` to store the name hash to save a bit of gas.

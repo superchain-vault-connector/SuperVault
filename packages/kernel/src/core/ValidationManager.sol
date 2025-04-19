@@ -458,7 +458,7 @@ abstract contract ValidationManager is EIP712, SelectorManager, HookManager, Exe
 
     function _checkPermissionSignature(
         PermissionId pId,
-        address caller,
+        address /*caller*/,
         bytes32 hash,
         bytes calldata sig,
         bool isReplayable
